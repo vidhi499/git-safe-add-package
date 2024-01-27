@@ -112,7 +112,7 @@ function cleanUpFiles() {
       const files = fs.readdirSync("./");
       console.log(files);
       files.map((file) => {
-        if (file !== `${packageName}` || file !== ".git") {
+        if (file !== `${packageName}` && file !== ".git") {
           console.log(file);
           fs.rmSync(file, {
             recursive: true,
@@ -146,17 +146,6 @@ function updateBranch() {
         console.log(JSON.stringify(stderr), "STDERR");
         return new Error(stderr);
       } else {
-        const files = fs.readdirSync("./");
-        console.log(files);
-        files.map((file) => {
-          if (file !== `${packageName}` || file !== ".git") {
-            console.log(file);
-            fs.rmSync(file, {
-              recursive: true,
-            });
-          }
-        });
-
         return stdout;
       }
     });
