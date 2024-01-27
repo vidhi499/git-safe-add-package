@@ -175,7 +175,7 @@ function updateBranch() {
 }
 
 function fetchBranch(){
-  exec(`git add . && git commit -m "changes" && git push origin ${originBranchName} && git checkout ${currentBranchName}`,
+  exec(`git pull origin ${originBranchName} --no-ff`,
   function (err, stdout, stderr) {
     if (err != null) {
       return new Error(err);
