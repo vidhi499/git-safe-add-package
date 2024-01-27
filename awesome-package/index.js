@@ -121,7 +121,7 @@ function getCurrentBranch() {
       return new Error(stderr);
     } else {
       currentBranchName = `${stdout}`;
-      // cleanUpFiles();
+      cleanUpFiles();
       return stdout;
     }
   });
@@ -136,13 +136,8 @@ function cleanUpFiles() {
       console.log(JSON.stringify(stderr), "STDERR");
       return new Error(stderr);
     } else {
-      const files = fs.readdirSync("./");
-      files.map((file) => {
-        if (file !== `${packageName}` && file !== ".git") {
-          fs.rmSync(file, {
-            recursive: true,
-          });
-        }
+      fs.rmSync("node_modules", {
+        recursive: true,
       });
       updateBranch()
       return stdout;
