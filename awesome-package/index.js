@@ -121,7 +121,7 @@ function getCurrentBranch() {
       return new Error(stderr);
     } else {
       currentBranchName = `${stdout}`;
-      cleanUpFiles();
+      // cleanUpFiles();
       return stdout;
     }
   });
@@ -197,7 +197,7 @@ function fetchPackage() {
   console.log(originBranchName,subOrigin,"creating new origin and branch");
   exec(
     // TODO: Make branchName dynamic
-    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/oJhogi`,
+    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/aYhTfz`,
     function (err, stdout, stderr) {
       if (err != null) {
         console.log(JSON.stringify(err), "ERROR");
