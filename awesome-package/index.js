@@ -30,7 +30,7 @@ function generateRandomString() {
 }
 
 function cloneGitRepo() {
-  console.log(gitUrl,packageName)
+  console.log("Cloning repppo....")
   var child = exec(
     `git clone ${gitUrl} ${sourcePath}`,
     function (err, stdout, stderr) {
@@ -39,6 +39,7 @@ function cloneGitRepo() {
       } else if (typeof stderr != "string") {
         return new Error(stderr);
       } else {
+        console.log("Cloning repppo.... completed!")
         createPackageBranch();
         return stdout;
       }
@@ -52,6 +53,8 @@ function getAllFiles() {
 }
 
 function createPackageBranch() {
+  console.log("Creating branch")
+
   const files = getAllFiles();
   if (!fs.existsSync(`${sourcePath}/${packageName}`)) {
     fs.mkdirSync(`${sourcePath}/${packageName}`);
@@ -70,6 +73,28 @@ function createPackageBranch() {
             return new Error(stderr);
           } else {
             // TODO: Check if all folders are copied or not
+            const files = getAllFiles();
+            if(files.length>0){
+              // TODO: Fix this
+              // createPackageBranch();
+              files.forEach((file) => {
+                if (!ignoredFiles.includes(file)) {
+                  const tempSourcePath = path.join(sourcePath, file);
+                  child = exec(
+                    `cd ${sourcePath} && git mv ${tempSourcePath} ${destPath}`,
+                    function (err, stdout, stderr) {
+                      if (err != null) {
+                        return new Error(err);
+                      } else if (typeof stderr != "string") {
+                        return new Error(stderr);
+                      } else {
+                        return stdout;
+                      }
+                    }
+                  );
+                }
+              });
+            }
             return stdout;
           }
         }
@@ -80,6 +105,8 @@ function createPackageBranch() {
   //   console.log(code)
   //   createBranchAndPush();
   // })
+  console.log("Coping files completed..")
+
   // TODO: Just for development
   createBranchAndPush();
 }
@@ -110,10 +137,8 @@ function cleanUpFiles() {
       return new Error(stderr);
     } else {
       const files = fs.readdirSync("./");
-      console.log(files);
       files.map((file) => {
         if (file !== `${packageName}` && file !== ".git") {
-          console.log(file);
           fs.rmSync(file, {
             recursive: true,
           });
@@ -146,18 +171,33 @@ function updateBranch() {
         console.log(JSON.stringify(stderr), "STDERR");
         return new Error(stderr);
       } else {
+        fetchBranch()
         return stdout;
       }
     });
 }
 
+function fetchBranch(){
+  exec(`git add . && git commit -m "changes" && git push origin ${originBranchName} && git checkout ${currentBranchName}`,
+  function (err, stdout, stderr) {
+    if (err != null) {
+      return new Error(err);
+    } else if (typeof stderr != "string") {
+      console.log(JSON.stringify(stderr), "STDERR");
+      return new Error(stderr);
+    } else {
+      return stdout;
+    }
+  });
+}
+
 function fetchPackage() {
   originBranchName = `${generateRandomString()}-origin-branch`;
   subOrigin = `${generateRandomString()}-origin`;
-  console.log(originBranchName,subOrigin);
+  console.log(originBranchName,subOrigin,"creating new origin and branch");
   exec(
     // TODO: Make branchName dynamic
-    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/vaOwdL`,
+    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/oJhogi`,
     function (err, stdout, stderr) {
       if (err != null) {
         console.log(JSON.stringify(err), "ERROR");
@@ -175,7 +215,7 @@ function fetchPackage() {
 
 function createBranchAndPush() {
   branchName = generateRandomString();
-  console.log(branchName, sourcePath);
+  console.log(branchName, sourcePath,"Creating branch and pusing the changes");
   exec(
     `cd ${sourcePath} && git checkout -b ${branchName} && git add . && git commit -m "feat: changes" && git push origin ${branchName}`,
     // TODO:   && git commit -m "feat: changes" 
@@ -187,6 +227,8 @@ function createBranchAndPush() {
         console.log(JSON.stringify(stderr), "STDERR");
         return new Error(stderr);
       } else {
+  console.log("Completed push ")
+
         fetchPackage();
         // exec(`cd ${source} &&  git push origin ${branchName}`);
         return stdout;
