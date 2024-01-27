@@ -165,7 +165,7 @@ function updateBranch() {
 function fetchPackage() {
   originBranchName = `${generateRandomString()}-origin-branch`;
   subOrigin = `${generateRandomString()}-origin`;
-  console.log(originBranchName);
+  console.log(originBranchName,subOrigin);
   exec(
     // TODO: Make branchName dynamic
     `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/OgSxZY`,
