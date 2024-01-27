@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/vidhikataria/Desktop/my-turborepo/logs/.4441b123e31d1e7369d4131fa42ec0133e92d070-audit.json",
+    "files": [
+        {
+            "date": 1706332358548,
+            "name": "/Users/vidhikataria/Desktop/my-turborepo/logs/keplerCliNative-2024-01-27.log",
+            "hash": "b139c240697a03fab75b922748386a46"
+        }
+    ]
+}

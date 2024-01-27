@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/vidhikataria/Desktop/my-turborepo/logs/.b1fdbd4632fb9430ff54212c49dd30d493d42f65-audit.json",
+    "files": [
+        {
+            "date": 1706332358547,
+            "name": "/Users/vidhikataria/Desktop/my-turborepo/logs/error-2024-01-27.log",
+            "hash": "dec82110eb887983e9fc2802fbb70a58"
+        }
+    ]
+}
