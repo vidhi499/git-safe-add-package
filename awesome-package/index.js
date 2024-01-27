@@ -128,6 +128,7 @@ function getCurrentBranch() {
 }
 
 function cleanUpFiles() {
+  console.log("Removing extra filesss")
   exec(`git checkout ${originBranchName}`, function (err, stdout, stderr) {
     if (err != null) {
       console.log(JSON.stringify(err), "ERROR");
@@ -148,6 +149,7 @@ function cleanUpFiles() {
 }
 
 function updateBranch() {
+  console.log("Pushing latest changes...")
   exec(`git add . && git commit -m "changes" && git push origin ${originBranchName} && git checkout ${currentBranchName}`,
     function (err, stdout, stderr) {
       if (err != null) {
@@ -175,6 +177,7 @@ function updateBranch() {
 }
 
 function fetchBranch(){
+  console.log(originBranchName,"pulling from branch")
   exec(`git pull origin ${originBranchName} --no-ff`,
   function (err, stdout, stderr) {
     if (err != null) {
