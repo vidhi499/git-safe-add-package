@@ -136,9 +136,11 @@ function cleanUpFiles() {
       console.log(JSON.stringify(stderr), "STDERR");
       return new Error(stderr);
     } else {
-      fs.rmSync("node_modules", {
-        recursive: true,
-      });
+      if(fs.existsSync("node_modules")){
+        fs.rmSync("node_modules", {
+          recursive: true,
+        });
+      }
       updateBranch()
       return stdout;
     }
