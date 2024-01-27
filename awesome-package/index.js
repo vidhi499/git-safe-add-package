@@ -57,7 +57,7 @@ function createPackageBranch() {
     fs.mkdirSync(`${sourcePath}/${packageName}`);
   }
   const destPath = path.join(sourcePath, `${packageName}`);
-  var child
+  var child;
   files.forEach((file) => {
     if (!ignoredFiles.includes(file)) {
       const tempSourcePath = path.join(sourcePath, file);
@@ -157,7 +157,7 @@ function fetchPackage() {
   console.log(originBranchName,subOrigin);
   exec(
     // TODO: Make branchName dynamic
-    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/OgSxZY`,
+    `git remote add ${subOrigin} ./temp && git fetch ${subOrigin} && git branch ${originBranchName} remotes/${subOrigin}/vaOwdL`,
     function (err, stdout, stderr) {
       if (err != null) {
         console.log(JSON.stringify(err), "ERROR");
@@ -177,7 +177,7 @@ function createBranchAndPush() {
   branchName = generateRandomString();
   console.log(branchName, sourcePath);
   exec(
-    `cd ${sourcePath} && git checkout -b ${branchName} && git add . && git push origin ${branchName}`,
+    `cd ${sourcePath} && git checkout -b ${branchName} && git add . && git commit -m "feat: changes" && git push origin ${branchName}`,
     // TODO:   && git commit -m "feat: changes" 
     function (err, stdout, stderr) {
       if (err != null) {
