@@ -7,7 +7,7 @@ const packageName = args[1];
 const currDir = process.cwd();
 const sourcePath = path.join(currDir, "temp");
 const ignoredFiles = ["script.js", `${packageName}`, "node_modules"];
-let branchName, originBranchName, subOrigin;
+let branchName, originBranchName, subOrigin, currentBranchName;
 
 function getAllFiles() {
   const filenames = fs.readdirSync(__dirname);
@@ -80,6 +80,43 @@ function createPackageBranch() {
   createBranchAndPush();
 }
 
+function getCurrentBranch() {
+  exec(`git branch --show-current`, function (err, stdout, stderr) {
+    if (err != null) {
+      console.log(JSON.stringify(err), "ERROR");
+      return new Error(err);
+    } else if (typeof stderr != "string") {
+      onsole.log(JSON.stringify(stderr), "STDERR");
+      return new Error(stderr);
+    } else {
+      currentBranchName = `${stdout}`;
+      cleanUpFiles();
+      return stdout;
+    }
+  });
+}
+
+function cleanUpFiles() {
+  exec(`git checkout ${originBranchName}`, function (err, stdout, stderr) {
+    if (err != null) {
+      console.log(JSON.stringify(err), "ERROR");
+      return new Error(err);
+    } else if (typeof stderr != "string") {
+      onsole.log(JSON.stringify(stderr), "STDERR");
+      return new Error(stderr);
+    } else {
+      const files = fs.readdirSync("./");
+      console.log(files);
+      files.map((file) => {
+        if (file !== `${packageName}`) {
+          console.log("kbnk");
+        }
+      });
+      return stdout;
+    }
+  });
+}
+
 function fetchPackage() {
   originBranchName = `${generateRandomString()}-origin-branch`;
   subOrigin = `${generateRandomString()}-origin`;
@@ -95,7 +132,7 @@ function fetchPackage() {
         onsole.log(JSON.stringify(stderr), "STDERR");
         return new Error(stderr);
       } else {
-        // exec(`cd ${source} &&  git push origin ${branchName}`);
+        getCurrentBranch();
         return stdout;
       }
     }
